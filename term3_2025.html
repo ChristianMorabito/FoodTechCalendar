@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Term 3 Calendar</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px;
+            height: 100px; /* Fixed height for all cells */
+            min-height: 100px;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 12px 8px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Set consistent widths for all columns */
+        th:first-child, td:first-child {
+            width: 16%;
+        }
+
+        th:not(:first-child), td:not(:first-child) {
+            width: 16.8%; /* 84% divided by 5 columns */
+        }
+
+        tr:first-child th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        tr:first-child th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .weekA {
+            background-color: #dbdee0; /* light blue */
+            td:first-child {
+                background-color: #556f89;
+            }
+        }
+
+        .weekB {
+            background-color: #f9f9f9; /* light gray */
+        }
+
+        /* Improved status styling */
+        .taken summary {
+            background-color: #e74c3c; /* softer red */
+            color: white;
+        }
+
+        .free summary {
+            background-color: #2ecc71; /* softer green */
+            color: white;
+        }
+
+        /* Details/summary styling */
+        details {
+            display: block;
+            margin: 4px 0;
+            text-align: center;
+        }
+
+        summary {
+            display: block;
+            padding: 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        summary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] summary {
+            margin-bottom: 5px;
+        }
+
+        details > div {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 13px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        /* Week cell styling */
+        td:first-child {
+            font-weight: 600;
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* No School cell styling */
+        .no-school {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-weight: 600;
+            color: #e74c3c;
+            font-size: 16px;
+            background-color: #fef9e7;
+        }
+
+        /* Day cell styling */
+        td:not(:first-child) {
+            vertical-align: top;
+            padding-top: 12px;
+        }
+
+        /* Footer styling */
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .free-legend {
+            background-color: #2ecc71;
+        }
+
+        .taken-legend {
+            background-color: #e74c3c;
+        }
+
+        .weekA-legend {
+            background-color: #e8f4fd;
+        }
+
+        .weekB-legend {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h2>Term 3 Food Tech Calendar 2025</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="week5" class="weekB">
+                <td>Aug 18 - 22<br>Wk 5 - B</td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Chin Ee - VM</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                </td>
+            </tr>
+            <tr id="week6" class="weekA">
+                <td>Aug 25 – Aug 29<br>Wk 6 - A</td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+            </tr>
+            <tr id="week7" class="weekB">
+                <td>Sep 1 – Sep 4<br>Wk 7 - B</td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Chin Ee - VM</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                </td>
+            </tr>
+            <tr id="week8" class="weekA">
+                <td>Sep 8 – Sep 12<br>Wk 8 - A</td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Booked</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 10 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+            </tr>
+            <tr id="week9" class="weekB">
+                <td>Sep 15 – Sep 18<br>Wk 9 - B</td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>2</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>5</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                    <details class="taken">
+                        <summary>6</summary>
+                        <div>Jing – Yr 7 Food & Culture</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="free">
+                        <summary>1</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 12 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>4</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Marina – Yr 9 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>3</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <details class="taken">
+                        <summary>1</summary>
+                        <div>Chin Ee - VM</div>
+                    </details>
+                    <details class="taken">
+                        <summary>2</summary>
+                        <div>Chin Ee - VM</div>
+                    </details>
+                    <details class="taken">
+                        <summary>3</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="taken">
+                        <summary>4</summary>
+                        <div>Marina – Yr 11 Food Studies</div>
+                    </details>
+                    <details class="free">
+                        <summary>5</summary>
+                        <div>Available</div>
+                    </details>
+                    <details class="free">
+                        <summary>6</summary>
+                        <div>Available</div>
+                    </details>
+                </td>
+                <td>
+                    <div class="no-school">No School</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
